@@ -2,7 +2,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend,
 } from "recharts";
-import { exportMarkets } from "../data/data";
+import { exportMarkets, customers } from "../data/data";
 import InsightBox from "./InsightBox";
 
 const fmt = (v) => `$${(v / 1000000).toFixed(1)}M`;
@@ -14,7 +14,7 @@ const regionColors = {
   "North America": "#D4A94E",
 };
 
-export default function ExportMarkets({ t }) {
+export default function MarketsCustomers({ t }) {
   const regionData = Object.entries(
     exportMarkets.reduce((acc, m) => {
       acc[m.region] = (acc[m.region] || 0) + m.revenue;
@@ -24,7 +24,8 @@ export default function ExportMarkets({ t }) {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-bold text-green-primary">{t.exportsTitle}</h2>
+      {/* Section A: Export Markets */}
+      <h2 className="text-xl font-bold text-green-primary">{t.marketsTitle}</h2>
 
       <div className="bg-white rounded-xl shadow-sm border border-cream-dark overflow-x-auto">
         <table className="w-full text-sm">
@@ -93,6 +94,51 @@ export default function ExportMarkets({ t }) {
       </div>
 
       <InsightBox text={t.exportsInsight} />
+
+      {/* Divider */}
+      <div className="border-t border-cream-dark my-4" />
+
+      {/* Section B: Top Customers */}
+      <h2 className="text-xl font-bold text-green-primary">{t.customersTitle}</h2>
+
+      <InsightBox text={t.customersAlert} variant="warning" />
+
+      <div className="bg-white rounded-xl shadow-sm border border-cream-dark overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="bg-green-primary text-white">
+              <th className="text-left px-4 py-3 font-medium">{t.customer}</th>
+              <th className="text-left px-4 py-3 font-medium">{t.country}</th>
+              <th className="text-right px-4 py-3 font-medium">{t.revenue}</th>
+              <th className="text-right px-4 py-3 font-medium">{t.orders}</th>
+              <th className="text-left px-4 py-3 font-medium">{t.lastOrder}</th>
+              <th className="text-left px-4 py-3 font-medium">{t.status}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {customers.map((row, i) => (
+              <tr key={row.name} className={i % 2 === 0 ? "bg-white" : "bg-cream"}>
+                <td className="px-4 py-3 font-medium">{row.name}</td>
+                <td className="px-4 py-3">{row.country}</td>
+                <td className="px-4 py-3 text-right">${row.revenue.toLocaleString()}</td>
+                <td className="px-4 py-3 text-right">{row.orders}</td>
+                <td className="px-4 py-3">{row.lastOrder}</td>
+                <td className="px-4 py-3">
+                  {row.status === "active" ? (
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      {t.active}
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      ⚠ {t.inactive} {row.inactiveDays}
+                    </span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

@@ -4,10 +4,11 @@ import Header from "./components/Header";
 import TabBar from "./components/TabBar";
 import Footer from "./components/Footer";
 import Overview from "./components/Overview";
-import SupplyOrigins from "./components/SupplyOrigins";
-import ExportMarkets from "./components/ExportMarkets";
-import Customers from "./components/Customers";
+import SupplySeasons from "./components/SupplySeasons";
+import MarketsCustomers from "./components/MarketsCustomers";
 import Products from "./components/Products";
+import SupplyChain from "./components/SupplyChain";
+import IndustryInsights from "./components/IndustryInsights";
 import MarketPrices from "./components/MarketPrices";
 
 function App() {
@@ -17,11 +18,12 @@ function App() {
 
   const renderTab = () => {
     switch (activeTab) {
-      case "overview": return <Overview t={t} lang={lang} />;
-      case "supply": return <SupplyOrigins t={t} />;
-      case "exports": return <ExportMarkets t={t} />;
-      case "customers": return <Customers t={t} />;
+      case "overview": return <Overview t={t} lang={lang} setActiveTab={setActiveTab} />;
+      case "supply": return <SupplySeasons t={t} />;
+      case "markets": return <MarketsCustomers t={t} />;
       case "products": return <Products t={t} />;
+      case "supplychain": return <SupplyChain t={t} />;
+      case "insights": return <IndustryInsights t={t} />;
       case "prices": return <MarketPrices t={t} />;
       default: return <Overview t={t} lang={lang} />;
     }

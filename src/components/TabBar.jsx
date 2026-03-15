@@ -1,9 +1,10 @@
 const tabs = [
   { key: "overview", labelKey: "tabOverview" },
   { key: "supply", labelKey: "tabSupply" },
-  { key: "exports", labelKey: "tabExports" },
-  { key: "customers", labelKey: "tabCustomers" },
+  { key: "markets", labelKey: "tabMarkets" },
   { key: "products", labelKey: "tabProducts" },
+  { key: "supplychain", labelKey: "tabSupplyChain" },
+  { key: "insights", labelKey: "tabInsights" },
   { key: "prices", labelKey: "tabPrices" },
 ];
 
